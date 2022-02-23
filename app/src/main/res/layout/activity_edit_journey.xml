@@ -84,7 +84,6 @@
         android:layout_margin="12dp"
         android:onClick="onClickSave"
         android:padding="8dp"
-        android:text="SAVE JOURNEY"
-        android:theme="@style/FlatButton" />
+        android:text="SAVE JOURNEY" />
 
 </LinearLayout>

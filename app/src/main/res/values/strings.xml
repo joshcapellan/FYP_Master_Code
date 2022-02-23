@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">runner tracker</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name="nav_item_record">Record Journey</string>
+    <string name="nav_item_journeys">View Journeys</string>
+    <string name="nav_item_statistics">Statistics</string>
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_record</item>
+        <item>@string/nav_item_journeys</item>
+        <item>@string/nav_item_statistics</item>
+    </string-array>
+
+    <string name="title_statistics">Statistics</string>
+    <string name="title_journeys">View Journeys</string>
+    <string name="title_record">Record Journey</string>
+    <string name="title_home">Home</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
