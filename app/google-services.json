@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "883410785781",
+    "project_id": "runtrackingapp-fb75a",
+    "storage_bucket": "runtrackingapp-fb75a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883410785781:android:3470d85b6dea8f39aebcbc",
+        "android_client_info": {
+          "package_name": "com.example.runnertracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883410785781-qtuor4hbgqki8hjpjho2gpk9plbsqlba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJNwTZwjVhRwX26lNMwVtk-ojsT3_ryHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883410785781-qtuor4hbgqki8hjpjho2gpk9plbsqlba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
