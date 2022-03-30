@@ -2,14 +2,15 @@ package com.example.runnertracker;
 
 public class User {
 
-    public String fullname,age,email;
+    public String fullname,age,email, password;
 
     public User(){}
 
-    public User(String fullname, String age, String email){
+    public User(String fullname, String age, String email, String password){
         this.fullname = fullname;
         this.age = age;
         this.email = email;
+        this.password = password;
     }
 
 }

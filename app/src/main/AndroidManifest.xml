@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
 
@@ -49,7 +52,6 @@
             android:exported="true" />
 
         <activity android:name=".RecordJourney" />
-
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

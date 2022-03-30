@@ -12,6 +12,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //contents of both email and password edit text converted into string variables
                 String email = emailEt.getText().toString();
                 String password = passwordEt.getText().toString();
+
 
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                     Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_LONG).show();

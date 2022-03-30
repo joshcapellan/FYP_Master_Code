@@ -12,8 +12,21 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/action_github"
+        android:title="Github"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/share"
+        android:title="Share"
+        android:orderInCategory="100"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/tud"
+        android:title="TUD"
+        android:orderInCategory="100"
+        app:showAsAction="collapseActionView" />
+
 </menu>

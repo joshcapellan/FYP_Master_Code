@@ -1,5 +1,7 @@
 package com.example.runnertracker;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -20,10 +22,14 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class RecordJourney extends AppCompatActivity {
     private GifPlayer gif;
@@ -118,7 +124,7 @@ public class RecordJourney extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_journey);
 
@@ -132,6 +138,49 @@ public class RecordJourney extends AppCompatActivity {
 
         playButton = findViewById(R.id.startButton);
         stopButton = findViewById(R.id.stopButton);
+
+        ///////////NAV BAR CODE//////////////////////////////////
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.ic_home:
+                        Intent intent1 = new Intent(RecordJourney.this, MainActivity.class);
+                        startActivity(intent1);
+                        break;
+
+                    case R.id.ic_record:
+
+                        break;
+
+                    case R.id.ic_view:
+                        Intent intent2 = new Intent(RecordJourney.this, ViewJourneys.class);
+                        startActivity(intent2);
+                        break;
+
+                    case R.id.ic_stats:
+                        Intent intent3 = new Intent(RecordJourney.this, StatisticsActivity.class);
+                        startActivity(intent3);
+                        break;
+
+                    case R.id.ic_profile:
+                        Intent intent4 = new Intent(RecordJourney.this, EditProfileActivity.class);
+                        startActivity(intent4);
+                        break;
+                }
+
+
+                return false;
+            }
+        });
+
+    //////////////////////////////////////////////////////////////////
 
         // connect to service to see if currently tracking before enabling a button
         stopButton.setEnabled(false);
@@ -153,6 +202,7 @@ public class RecordJourney extends AppCompatActivity {
         startService(new Intent(this, LocationService.class));
         bindService(
                 new Intent(this, LocationService.class), lsc, Context.BIND_AUTO_CREATE);
+
     }
 
     public void onClickPlay(View view) {

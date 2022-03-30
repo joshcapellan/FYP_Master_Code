@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".EditProfileActivity"
+    android:background="@color/colorWhite">>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,15 +17,6 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="167dp"
-            android:layout_height="160dp"
-            android:layout_gravity="center_horizontal"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/runner2" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -43,6 +35,18 @@
             android:layout_height="56dp">
 
             <EditText
+                android:id="@+id/fullname_edt_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Enter fullname" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <EditText
                 android:id="@+id/pass_edt_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -51,20 +55,24 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+
+            <EditText
+                android:id="@+id/age_edt_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Enter age" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/update_btn"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
-            android:text="Login"/>
-
-        <TextView
-            android:id="@+id/reset_pass_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Forgot password?"
-            android:layout_gravity="center"
-            android:clickable="true"/>
+            android:text="Update" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -101,12 +109,32 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/signup_btn"
+            android:id="@+id/back_btn3"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="16dp"
-            android:text="Signup" />
+            android:text="back" />
 
     </LinearLayout>
+
+    <!-- Nav Bar Code -->
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomNavView_Bar"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemIconTint="@color/drawer_item"
+        >
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+    <!-- Nav Bar Code -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

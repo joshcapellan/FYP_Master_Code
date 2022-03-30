@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -15,19 +17,53 @@
         <ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_profile"
+            android:layout_centerInParent="true"
             android:scaleType="fitCenter"
-            android:layout_centerInParent="true" />
+            app:srcCompat="@drawable/ic_profile"
+            tools:ignore="ImageContrastCheck" />
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/info_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nav_header_container">
+
+        <TextView
+            android:id="@+id/infoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fullname"
+            android:textSize="30dp"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/infoAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/infoName"
+            android:text="Age"
+            android:textSize="20dp"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/infoEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/infoAge"
+            android:layout_marginLeft="15dp"
+            android:text="Email"
+            android:textSize="15dp" />
+
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/drawerList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nav_header_container"
-        android:layout_marginTop="15dp" />
-
+        android:layout_below="@id/info_container"
+        android:layout_marginTop="38dp" />
 
 </RelativeLayout>

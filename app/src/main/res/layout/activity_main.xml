@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:id="@+id/drawer_layout">
+    android:id="@+id/drawer_layout"
+    android:background="@color/colorWhite">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +28,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_body"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
+            android:layout_height="622dp"
             android:layout_weight="1">
 
             <Button
@@ -36,10 +38,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="216dp"
                 android:layout_marginEnd="8dp"
-                android:background="@android:color/holo_green_dark"
+                android:layout_marginBottom="43dp"
+                android:background="@color/iconPink"
                 android:onClick="onClickLogout"
                 android:text="Logout"
                 android:textColor="@android:color/white"
+
+                app:layout_constraintBottom_toTopOf="@+id/bottomNavView_Bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button2" />
@@ -49,12 +54,13 @@
                 android:layout_width="167dp"
                 android:layout_height="160dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/runner" />
+                app:srcCompat="@drawable/runner2" />
 
             <Button
                 android:id="@+id/button"
@@ -63,7 +69,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="8dp"
-                android:background="@android:color/holo_green_dark"
+                android:background="@drawable/rounded_corner"
                 android:onClick="onClickRecord"
                 android:text="RECORD JOURNEY"
                 android:textColor="@android:color/white"
@@ -77,14 +83,13 @@
                 android:layout_width="200dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@android:color/holo_green_dark"
+                android:background="@drawable/rounded_corner"
                 android:onClick="onClickView"
                 android:text="VIEW JOURNEYS"
                 android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@+id/button3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button" />
@@ -94,14 +99,13 @@
                 android:layout_width="200dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@android:color/holo_green_dark"
+                android:background="@drawable/rounded_corner"
                 android:onClick="onClickStatistics"
                 android:text="STATISTICS"
                 android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@+id/profileBtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button2" />
@@ -111,10 +115,10 @@
                 android:layout_width="200dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="105dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="105dp"
                 android:layout_marginBottom="35dp"
-                android:background="@android:color/holo_green_dark"
+                android:background="@drawable/rounded_corner"
                 android:onClick="onClickProfile"
                 android:text="PROFILE"
                 android:textColor="@android:color/white"
@@ -137,9 +141,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView"
                 app:layout_constraintVertical_bias="1.0" />
 
+<!-- Nav Bar Code -->
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bottomNavView_Bar"
+                android:background="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_navigation_menu"
+                app:itemIconTint="@color/drawer_item"
+                >
+
+            </com.google.android.material.bottomnavigation.BottomNavigationView>
+<!-- Nav Bar Code -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </LinearLayout>
 
@@ -150,7 +169,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:layout="@layout/fragment_navigation_drawer"
-        tools:layout="@layout/fragment_navigation_drawer" />
+        tools:layout="@layout/fragment_navigation_drawer"
+        />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

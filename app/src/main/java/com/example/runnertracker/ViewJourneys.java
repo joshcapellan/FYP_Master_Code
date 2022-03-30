@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,6 +24,10 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -122,6 +128,48 @@ public class ViewJourneys extends ListActivity {
         adapter = new JourneyAdapter(this, R.layout.journeylist, journeyNames);
         setListAdapter(adapter);
         setUpDateDialogue();
+
+        ///////////NAV BAR CODE//////////////////////////////////
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.ic_home:
+                        Intent intent1 = new Intent(ViewJourneys.this, MainActivity.class);
+                        startActivity(intent1);
+                        break;
+
+                    case R.id.ic_record:
+                        Intent intent2 = new Intent(ViewJourneys.this, RecordJourney.class);
+                        startActivity(intent2);
+                        break;
+
+                    case R.id.ic_view:
+                        break;
+
+                    case R.id.ic_stats:
+                        Intent intent3 = new Intent(ViewJourneys.this, StatisticsActivity.class);
+                        startActivity(intent3);
+                        break;
+
+                    case R.id.ic_profile:
+                        Intent intent4 = new Intent(ViewJourneys.this, EditProfileActivity.class);
+                        startActivity(intent4);
+                        break;
+                }
+
+
+                return false;
+            }
+        });
+
+    //////////////////////////////////////////////////////////////////
 
         journeyList.setClickable(true);
         journeyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -1,14 +1,18 @@
 package com.example.runnertracker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -19,6 +23,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -54,6 +59,47 @@ public class StatisticsActivity extends AppCompatActivity {
 
         setUpDateDialogue();
 
+        ///////////NAV BAR CODE//////////////////////////////////
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(3);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.ic_home:
+                        Intent intent1 = new Intent(StatisticsActivity.this, MainActivity.class);
+                        startActivity(intent1);
+                        break;
+
+                    case R.id.ic_record:
+                        Intent intent2 = new Intent(StatisticsActivity.this, RecordJourney.class);
+                        startActivity(intent2);
+                        break;
+
+                    case R.id.ic_view:
+                        Intent intent3 = new Intent(StatisticsActivity.this, ViewJourneys.class);
+                        startActivity(intent3);
+                        break;
+
+                    case R.id.ic_stats:
+                        break;
+
+                    case R.id.ic_profile:
+                        Intent intent4 = new Intent(StatisticsActivity.this, EditProfileActivity.class);
+                        startActivity(intent4);
+                        break;
+                }
+
+
+                return false;
+            }
+        });
+
+        //////////////////////////////////////////////////////////////////
 
     }
 

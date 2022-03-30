@@ -1,5 +1,6 @@
 package com.example.runnertracker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -12,10 +13,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -51,6 +60,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private static final int PERMISSION_COAL_GPS_CODE = 2;
     FirebaseAuth auth;
 
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
+
+    private TextView greeting, infoName, infoAge, infoEmail;
+    Settings settings = new Settings(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +83,91 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
+
+        greeting = (TextView)findViewById(R.id.greetingTextView);
+        infoName = (TextView)findViewById(R.id.infoName);
+        infoAge = (TextView)findViewById(R.id.infoAge);
+        infoEmail = (TextView)findViewById(R.id.infoEmail);
+
+
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User userProfile = snapshot.getValue(User.class);
+
+                if(userProfile != null){
+                    String fullName = userProfile.fullname;
+                    String email = userProfile.email;
+                    String age = userProfile.age;
+
+                    greeting.setText("Welcome " + fullName);
+                    infoName.setText(fullName);
+                    infoAge.setText(age);
+                    infoEmail.setText(email);
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Error try again", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+
+
+
+        ///////////NAV BAR CODE//////////////////////////////////
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.ic_home:
+
+                        break;
+
+                    case R.id.ic_record:
+                        Intent intent1 = new Intent(MainActivity.this, RecordJourney.class);
+                        startActivity(intent1);
+                        break;
+
+                    case R.id.ic_view:
+                        Intent intent2 = new Intent(MainActivity.this, ViewJourneys.class);
+                        startActivity(intent2);
+                        break;
+
+                    case R.id.ic_stats:
+                        Intent intent3 = new Intent(MainActivity.this, StatisticsActivity.class);
+                        startActivity(intent3);
+                        break;
+
+                    case R.id.ic_profile:
+                        Intent intent4 = new Intent(MainActivity.this, EditProfileActivity.class);
+                        startActivity(intent4);
+                        break;
+                }
+
+
+                return false;
+            }
+        });
+
+        //////////////////////////////////////////////////////////////////
 
     }
 
@@ -85,13 +186,21 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_github) {
+            settings.github();
+        }
+
+        else if (id == R.id.tud) {
+            settings.tud();
+        }
+
+        else if (id == R.id.share) {
+            settings.share();
         }
 
         if(id == R.id.action_search){
-            Toast.makeText(getApplicationContext(), "Search action is selected!", Toast.LENGTH_SHORT).show();
-            return true;
+        Toast.makeText(getApplicationContext(), "Search action is selected!", Toast.LENGTH_SHORT).show();
+        return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -125,6 +234,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
     public void onClickRecord(View v) {
         // go to the record journey activity
         Intent journey = new Intent(MainActivity.this, RecordJourney.class);
@@ -152,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     public void onClickProfile(View v) {
         // go to the activity for displaying profile
-        Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+        Intent profile = new Intent(MainActivity.this, EditProfileActivity.class);
         startActivity(profile);
     }
 
