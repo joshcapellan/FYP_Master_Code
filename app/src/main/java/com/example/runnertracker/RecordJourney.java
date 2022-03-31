@@ -30,6 +30,8 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RecordJourney extends AppCompatActivity {
     private GifPlayer gif;
@@ -83,6 +85,7 @@ public class RecordJourney extends AppCompatActivity {
                                 durationText.setText(time);
                                 avgSpeedText.setText(avgs);
                                 distanceText.setText(dist);
+
                             }
                         });
 
@@ -222,6 +225,16 @@ public class RecordJourney extends AppCompatActivity {
         stopButton.setEnabled(false);
 
         gif.pause();
+
+        String newTime = durationText.getText().toString();
+        String newDist = distanceText.getText().toString();
+        String newAvgSpeed = avgSpeedText.getText().toString();
+
+        Run run = new Run(newTime, newDist, newAvgSpeed);
+
+        FirebaseDatabase.getInstance().getReference("Runs")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(run);
 
         DialogFragment modal = FinishedTrackingDialogue.newInstance(String.format("%.2f KM", distance));
         modal.show(getSupportFragmentManager(), "Finished");

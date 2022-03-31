@@ -63,47 +63,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
 
-
-
-
-
-//    //switch method used to deal with the button options provided within the sign up page
-//    @Override
-//    public void onClick(View view){
-//
-//        switch (view.getId()){
-//            //button that directs users back to the login page
-//            case R.id.login_btn:
-//                Intent intentLogin = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(intentLogin);
-//                break;
-//
-//            //button that starts sign up process
-//            case R.id.signup_btn:
-//
-//                //contents of both email and password edit text converted into string variables
-//                String email = emailEt.getText().toString();
-//                String password = passwordEt.getText().toString();
-//
-//                if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password))  {
-//                    Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_LONG).show();
-//                } else{
-//                    //firebase method that allows users to sign up an account with email and password
-//                    auth.createUserWithEmailAndPassword(email, password)
-//                        .addOnCompleteListener(this, task -> {
-//                            if(task.isSuccessful()){
-//                                Toast.makeText(getApplicationContext(),"Successfully Registered", Toast.LENGTH_LONG).show();
-//                                Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
-//                                startActivity(intentMain);
-//                            }
-//                            else{
-//                                Toast.makeText(getApplicationContext(), "Registration Failed", Toast.LENGTH_LONG).show();
-//                            }
-//                        });
-//                }
-//
-//                break;
-//        }
     }
 
     private void registerUser() {
