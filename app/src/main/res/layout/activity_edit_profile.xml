@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:srcCompat="@drawable/ic_profile" />
+        tools:srcCompat="@drawable/runner" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"

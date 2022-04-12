@@ -28,14 +28,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RecordJourney extends AppCompatActivity {
     private GifPlayer gif;
     private LocationService.LocationServiceBinder locationService;
+
+    private FirebaseUser user;
+    private DatabaseReference reference;
+    private String userID;
 
     private TextView distanceText;
     private TextView avgSpeedText;
@@ -183,7 +194,7 @@ public class RecordJourney extends AppCompatActivity {
             }
         });
 
-    //////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////
 
         // connect to service to see if currently tracking before enabling a button
         stopButton.setEnabled(false);
@@ -226,15 +237,39 @@ public class RecordJourney extends AppCompatActivity {
 
         gif.pause();
 
-        String newTime = durationText.getText().toString();
-        String newDist = distanceText.getText().toString();
-        String newAvgSpeed = avgSpeedText.getText().toString();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
 
-        Run run = new Run(newTime, newDist, newAvgSpeed);
 
-        FirebaseDatabase.getInstance().getReference("Runs")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .setValue(run);
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User userProfile = snapshot.getValue(User.class);
+
+                String newTime = durationText.getText().toString();
+                String newDist = distanceText.getText().toString();
+                String newAvgSpeed = avgSpeedText.getText().toString();
+                String newUid = userID;
+                String newFullname = userProfile.fullname;
+
+                Run run = new Run(newDist, newTime, newAvgSpeed, newUid, newFullname);
+
+                DatabaseReference runRef = rootReference.child("Runs").push();
+                runRef.setValue(run);
+
+//                FirebaseDatabase.getInstance().getReference("Runs")
+//                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                        .setValue(run);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Error try again", Toast.LENGTH_LONG).show();
+            }
+        });
 
         DialogFragment modal = FinishedTrackingDialogue.newInstance(String.format("%.2f KM", distance));
         modal.show(getSupportFragmentManager(), "Finished");

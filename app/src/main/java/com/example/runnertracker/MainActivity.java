@@ -26,8 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
-
 
 /*
 TO DO
@@ -255,10 +253,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         startActivity(view);
     }
 
-    public void onClickStatistics(View v) {
+    public void onClickGlobal(View v) {
         // go to the activity for displaying statistics
-        Intent stats = new Intent(MainActivity.this, StatisticsActivity.class);
-        startActivity(stats);
+        Intent global = new Intent(MainActivity.this, GlobalRunsActivity.class);
+        startActivity(global);
     }
 
     public void onClickLogout(View v) {
@@ -268,10 +266,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         startActivity(logout);
     }
 
-    public void onClickProfile(View v) {
+    public void onClickLeader(View v) {
         // go to the activity for displaying profile
-        Intent profile = new Intent(MainActivity.this, EditProfileActivity.class);
-        startActivity(profile);
+        Intent leader = new Intent(MainActivity.this, LeaderboardActivity.class);
+        startActivity(leader);
     }
 
 }
