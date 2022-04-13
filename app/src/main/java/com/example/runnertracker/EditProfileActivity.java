@@ -105,6 +105,7 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     String fullName = userProfile.fullname;
                     String email = userProfile.email;
                     String age = userProfile.age;
+                    double totalKm = userProfile.totalKm;
 
                     fullnameEt.setText(fullName);
                     emailEt.setText(email);
@@ -118,8 +119,9 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                             String newAge = ageEt.getText().toString();
                             String newEmail = emailEt.getText().toString();
                             String newPass = passwordEt.getText().toString();
+                            double newTotalKm = totalKm;
 
-                            update(newFullName, newAge, newEmail, newPass);
+                            update(newFullName, newAge, newEmail, newPass, newTotalKm);
 
                             user.updateEmail(emailEt.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -201,10 +203,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void update(String fullname, String age, String email, String password){
+    private void update(String fullname, String age, String email, String password, double totalKm){
 
         DatabaseReference DbRef = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-        User user = new User(fullname, age, email, password);
+        User user = new User(fullname, age, email, password, totalKm);
         DbRef.setValue(user);
     }
 

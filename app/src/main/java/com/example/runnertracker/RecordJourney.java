@@ -255,14 +255,15 @@ public class RecordJourney extends AppCompatActivity {
                 String newUid = userID;
                 String newFullname = userProfile.fullname;
 
-                Run run = new Run(newDist, newTime, newAvgSpeed, newUid, newFullname);
+                double newTotalDistance =  distance + userProfile.totalKm;
+                DatabaseReference userScoreRef = rootReference.child("Users").child(userID).child("totalKm");
+                userScoreRef.setValue(newTotalDistance);
 
+                Run run = new Run(newDist, newTime, newAvgSpeed, newUid, newFullname);
                 DatabaseReference runRef = rootReference.child("Runs").push();
                 runRef.setValue(run);
 
-//                FirebaseDatabase.getInstance().getReference("Runs")
-//                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                        .setValue(run);
+
             }
 
             @Override

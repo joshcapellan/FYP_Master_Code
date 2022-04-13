@@ -3,10 +3,11 @@ package com.example.runnertracker;
 public class User {
 
     public String fullname,age,email, password;
+    public double totalKm;
 
     public User(){}
 
-    public User(String fullname, String age, String email, String password){
+    public User(String fullname, String age, String email, String password, double totalKm){
         this.fullname = fullname;
         this.age = age;
         this.email = email;
@@ -43,5 +44,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public double getTotalKm() {
+        return totalKm;
+    }
+
+    public void setTotalKm(int totalKm) {
+        this.totalKm = totalKm;
     }
 }

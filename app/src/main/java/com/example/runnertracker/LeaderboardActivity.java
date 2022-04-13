@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     AdapterUsers adapterUsers;
     List<User> userList;
+    private Query reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +36,16 @@ public class LeaderboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leaderboard);
 
         //Initiate recycler view
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recyclerView = findViewById(R.id.users_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(layoutManager);
 
 
         //Initiate UserList
         userList = new ArrayList<>();
-        
+
         getAllUsers();
 
         ///////////NAV BAR CODE//////////////////////////////////
@@ -91,7 +96,8 @@ public class LeaderboardActivity extends AppCompatActivity {
     private void getAllUsers() {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        String userID = user.getUid();
+        reference = FirebaseDatabase.getInstance().getReference("Users").orderByChild("totalKm");
 
         //get all data from path
         reference.addValueEventListener(new ValueEventListener() {
@@ -101,6 +107,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                 userList.clear();
                 for(DataSnapshot ds: snapshot.getChildren()){
                     User user = ds.getValue(User.class);
+
 
                     userList.add(user);
 

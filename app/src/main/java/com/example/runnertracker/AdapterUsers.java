@@ -40,13 +40,17 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder>{
     public void onBindViewHolder(@NonNull MyHolder myHolder, int i) {
         //get data
         String userName = userList.get(i).getFullname();
+        double userScore = userList.get(i).getTotalKm();
         String userEmail = userList.get(i).getEmail();
         String userAge = userList.get(i).getAge();
 
+        String stringUserScore = Double.toString(userScore);
+
         //set data
         myHolder.mNameTv.setText(userName);
-        myHolder.mEmailTv.setText(userEmail);
-        myHolder.myAgeTv.setText(userAge);
+        myHolder.mScoreTv.setText("Total Kms " + stringUserScore + " km");
+        myHolder.mEmailTv.setText("Email: " + userEmail);
+        myHolder.mAgeTv.setText("Age " + userAge);
 
         //handle item click
         myHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -67,14 +71,15 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder>{
     class MyHolder extends RecyclerView.ViewHolder{
 
 
-        TextView mNameTv, mEmailTv, myAgeTv;
+        TextView mNameTv, mEmailTv, mAgeTv, mScoreTv;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 
             mNameTv = itemView.findViewById(R.id.rowName);
+            mScoreTv = itemView.findViewById(R.id.rowScore);
             mEmailTv = itemView.findViewById(R.id.rowEmail);
-            myAgeTv = itemView.findViewById(R.id.rowAge);
+            mAgeTv = itemView.findViewById(R.id.rowAge);
 
         }
     }

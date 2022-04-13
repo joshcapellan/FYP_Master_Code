@@ -70,6 +70,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     String password = passwordEt.getText().toString().trim();
     String fullname = fullnameEt.getText().toString().trim();
     String age = ageEt.getText().toString().trim();
+    double totalKm = 0.0;
 
     if(fullname.isEmpty()){
         fullnameEt.setError("Please enter full name.");
@@ -113,7 +114,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                     if(task.isSuccessful()){
-                        User user = new User(fullname, age, email, password);
+                        User user = new User(fullname, age, email, password, totalKm);
 
                         FirebaseDatabase.getInstance().getReference("Users")
                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
