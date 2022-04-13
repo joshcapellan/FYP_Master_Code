@@ -13,10 +13,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private String userID;
 
     private TextView greeting, infoName, infoAge, infoEmail;
+    private ImageView profilePic;
     Settings settings = new Settings(this);
 
     @Override
@@ -90,6 +93,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         infoName = (TextView)findViewById(R.id.infoName);
         infoAge = (TextView)findViewById(R.id.infoAge);
         infoEmail = (TextView)findViewById(R.id.infoEmail);
+        profilePic = findViewById(R.id.profilePicture2);
+
+        if(user.getPhotoUrl() != null){
+            Glide.with(MainActivity.this)
+                    .load(user.getPhotoUrl())
+                    .into(profilePic);
+        }
 
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {

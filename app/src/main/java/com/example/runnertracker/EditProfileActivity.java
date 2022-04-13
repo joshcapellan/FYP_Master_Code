@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +21,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +39,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.UUID;
 
@@ -52,11 +58,10 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
     private EditText ageEt;
     private Button updateBtn;
     private Button backBtn;
+    private static final String TAG = EditProfileActivity.class.getSimpleName();
 
     private ImageView profilePic;
-    public Uri imageUri;
-    private FirebaseStorage storage;
-    private StorageReference storageReference;
+    int TAKE_IMAGE_CODE = 10001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +79,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         backBtn = findViewById(R.id.back_btn3);
         profilePic = findViewById(R.id.profilePicture1);
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-
-        profilePic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent();
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, 2);
-            }
-        });
 
         updateBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
@@ -110,6 +103,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     fullnameEt.setText(fullName);
                     emailEt.setText(email);
                     ageEt.setText(age);
+
+                    if(user.getPhotoUrl() != null){
+                        Glide.with(EditProfileActivity.this)
+                                .load(user.getPhotoUrl())
+                                .into(profilePic);
+                    }
+
 
                     updateBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -196,11 +196,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         //////////////////////////////////////////////////////////////////
 
 
-
-
-
-
-
     }
 
     private void update(String fullname, String age, String email, String password, double totalKm){
@@ -210,52 +205,6 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
         DbRef.setValue(user);
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==2 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
-            imageUri = data.getData();
-            profilePic.setImageURI(imageUri);
-            uploadPicture();
-        }
-    }
-
-    private void uploadPicture() {
-
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setTitle("Uploading Image");
-        pd.show();
-
-
-        final String randomKey = UUID.randomUUID().toString();
-        StorageReference riversRef = storageReference.child("images/"+randomKey);
-
-        riversRef.putFile(imageUri)
-
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    pd.dismiss();
-                    Toast.makeText(getApplicationContext(), "Failed To Upload", Toast.LENGTH_SHORT).show();
-                }
-            })
-
-            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    pd.dismiss();
-                    Snackbar.make(findViewById(R.id.content), "Image Uploaded", Snackbar.LENGTH_LONG).show();
-                }
-            })
-
-            .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                    double progressPercent = (100.00 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    pd.setMessage("Progress: " + (int) progressPercent + "%");
-                }
-            });
-    }
 
 
     @Override
@@ -268,4 +217,87 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 break;
 
     }
-}}
+}
+
+    public void handleImageClick(View view) {
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(intent.resolveActivity(getPackageManager()) !=null){
+            startActivityForResult(intent, TAKE_IMAGE_CODE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == TAKE_IMAGE_CODE){
+            switch(resultCode){
+                case RESULT_OK:
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    profilePic.setImageBitmap(bitmap);
+                    handleUpload(bitmap);
+            }
+        }
+    }
+
+    private void handleUpload(Bitmap bitmap) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        StorageReference referenceImg = FirebaseStorage.getInstance().getReference()
+                .child("profileImages")
+                .child(uid + ".jpeg");
+
+        referenceImg.putBytes(baos.toByteArray())
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        getDownloadUrl(referenceImg);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "onFailure: ", e.getCause());
+                    }
+                });
+
+    }
+
+    private void getDownloadUrl(StorageReference referenceImg){
+        referenceImg.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.d(TAG, "onSuccess" + uri);
+                        setUserProfileUrl(uri);
+                    }
+                });
+    }
+
+    private void setUserProfileUrl(Uri uri){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setPhotoUri(uri)
+                .build();
+
+        user.updateProfile(request)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(EditProfileActivity.this, "Updated Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(EditProfileActivity.this, "Profile Image failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+}
