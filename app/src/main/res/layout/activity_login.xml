@@ -4,23 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:background="@color/colorWhite">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="357dp"
+        android:layout_height="636dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="167dp"
-            android:layout_height="160dp"
+            android:layout_width="270dp"
+            android:layout_height="257dp"
             android:layout_gravity="center_horizontal"
 
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +35,7 @@
                 android:id="@+id/email_edt_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Enter email"/>
+                android:hint="Enter email" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Enter password"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,15 +57,17 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
-            android:text="Login"/>
+            android:background="@drawable/rounded_corner"
+            android:textColor="@android:color/white"
+            android:text="Login" />
 
         <TextView
             android:id="@+id/reset_pass_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forgot password?"
             android:layout_gravity="center"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:text="Forgot password?" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -80,7 +83,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:text="OR"
-                android:textColor="#000000"/>
+                android:textColor="#000000" />
 
             <View
                 android:layout_width="match_parent"
@@ -105,6 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@android:color/white"
             android:text="Signup" />
 
     </LinearLayout>

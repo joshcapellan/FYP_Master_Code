@@ -34,8 +34,11 @@ public class GlobalRunsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_global_runs);
 
         //Initiate recycler view
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recyclerView = findViewById(R.id.global_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(layoutManager);
 
 
         //Initiate UserList

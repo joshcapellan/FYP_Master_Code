@@ -98,7 +98,7 @@ public class LocationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,
                 CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.drawable.ic_launcher_background1)
                 .setContentTitle("Tracking Journey")
                 .setContentText("Keep Running!")
                 .setContentIntent(pendingIntent)

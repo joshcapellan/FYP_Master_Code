@@ -216,8 +216,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                 startActivity(intentProfile);
                 break;
 
+        }
     }
-}
 
     public void handleImageClick(View view) {
 
