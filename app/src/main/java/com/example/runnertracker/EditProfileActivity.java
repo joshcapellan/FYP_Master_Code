@@ -98,11 +98,13 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
                     String fullName = userProfile.fullname;
                     String email = userProfile.email;
                     String age = userProfile.age;
+                    String password = userProfile.password;
                     double totalKm = userProfile.totalKm;
 
                     fullnameEt.setText(fullName);
                     emailEt.setText(email);
                     ageEt.setText(age);
+                    passwordEt.setText(password);
 
                     if(user.getPhotoUrl() != null){
                         Glide.with(EditProfileActivity.this)

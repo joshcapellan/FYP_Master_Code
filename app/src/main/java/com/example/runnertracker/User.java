@@ -12,6 +12,7 @@ public class User {
         this.age = age;
         this.email = email;
         this.password = password;
+        this.totalKm = totalKm;
     }
 
     public String getFullname() {
