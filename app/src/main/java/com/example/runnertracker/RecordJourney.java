@@ -232,11 +232,6 @@ public class RecordJourney extends AppCompatActivity {
         float distance = locationService.getDistance();
         locationService.saveJourney();
 
-        playButton.setEnabled(false);
-        stopButton.setEnabled(false);
-
-        gif.pause();
-
         user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -271,6 +266,11 @@ public class RecordJourney extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error try again", Toast.LENGTH_LONG).show();
             }
         });
+
+        playButton.setEnabled(false);
+        stopButton.setEnabled(false);
+
+        gif.pause();
 
         DialogFragment modal = FinishedTrackingDialogue.newInstance(String.format("%.2f KM", distance));
         modal.show(getSupportFragmentManager(), "Finished");
@@ -324,12 +324,13 @@ public class RecordJourney extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int reqCode, String[] permissions, int[] results) {
-        switch(reqCode) {
+        super.onRequestPermissionsResult(reqCode, permissions, results);
+        switch (reqCode) {
             case PERMISSION_GPS_CODE:
                 if (results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission granted
                     initButtons();
-                    if(locationService != null) {
+                    if (locationService != null) {
                         locationService.notifyGPSEnabled();
                     }
                 } else {

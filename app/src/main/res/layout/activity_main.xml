@@ -33,21 +33,21 @@
 
             <Button
                 android:id="@+id/button7"
-                android:layout_width="175dp"
-                android:layout_height="44dp"
+                android:layout_width="357dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="216dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="43dp"
-                android:background="@color/iconPink"
+                android:layout_marginBottom="32dp"
+
+                android:background="@drawable/rounded_corner"
                 android:onClick="onClickLogout"
                 android:text="Logout"
                 android:textColor="@android:color/white"
-
                 app:layout_constraintBottom_toTopOf="@+id/bottomNavView_Bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button2" />
+                app:layout_constraintTop_toBottomOf="@+id/profileBtn" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -115,10 +115,9 @@
                 android:id="@+id/profileBtn"
                 android:layout_width="357dp"
                 android:layout_height="65dp"
-                android:layout_marginStart="105dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="105dp"
-                android:layout_marginBottom="35dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/rounded_corner"
                 android:onClick="onClickLeader"
                 android:text="LEADERBOARDS"
@@ -142,7 +141,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView"
                 app:layout_constraintVertical_bias="1.0" />
 
-<!-- Nav Bar Code -->
+            <!-- Nav Bar Code -->
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,7 +156,7 @@
                 >
 
             </com.google.android.material.bottomnavigation.BottomNavigationView>
-<!-- Nav Bar Code -->
+            <!-- Nav Bar Code -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

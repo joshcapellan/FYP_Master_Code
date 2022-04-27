@@ -68,23 +68,23 @@ public class FragmentDrawer extends Fragment {
                              Bundle savedInstanceState) {
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+//        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
 
-        adapter = new NavigationDrawerAdapter(getActivity(), getData());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                drawerListener.onDrawerItemSelected(view, position);
-                mDrawerLayout.closeDrawer(containerView);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
+//        adapter = new NavigationDrawerAdapter(getActivity(), getData());
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+//            @Override
+//            public void onClick(View view, int position) {
+//                drawerListener.onDrawerItemSelected(view, position);
+//                mDrawerLayout.closeDrawer(containerView);
+//            }
+//
+//            @Override
+//            public void onLongClick(View view, int position) {
+//
+//            }
+//        }));
 
         return layout;
     }
